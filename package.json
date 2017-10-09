@@ -1,0 +1,33 @@
+{
+  "name": "setscraper",
+  "version": "0.1.0",
+  "description": "The utility scraper for https://marketdata.set.or.th",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonkla.com/setscraper.git"
+  },
+  "keywords": [
+    "scraper"
+  ],
+  "author": "Surakarn Samkaew <tonkla@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tonkla.com/setscraper/issues"
+  },
+  "homepage": "https://github.com/tonkla.com/setscraper#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "moment": "^2.18.1",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^4.0.1"
+  }
+}
