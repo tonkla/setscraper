@@ -76,7 +76,7 @@ function extractIndexes ($) {
     const symbol = cols.eq(0).text().trim()
     const last = cols.eq(1).text().trim()
     const change = cols.eq(2).text().trim()
-    const changePercent = cols.eq(3).text().trim()
+    const percentChange = cols.eq(3).text().trim()
     const high = cols.eq(4).text().trim()
     const low = cols.eq(5).text().trim()
     const volume = cols.eq(6).text().trim()
@@ -85,7 +85,7 @@ function extractIndexes ($) {
       symbol: symbol,
       last: last.toFloat(),
       change: change.toFloat(),
-      changePercent: changePercent.toFloat(),
+      percentChange: percentChange.toFloat(),
       high: high.toFloat(),
       low: low.toFloat(),
       volume: volume.toFloat({ multiply: 1e3 }),
