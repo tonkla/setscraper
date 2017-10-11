@@ -1,5 +1,1 @@
-const list = require('./list')
-
-list.get().then(res => {
-  console.log(res)
-})
+module.exports = require('./list')

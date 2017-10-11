@@ -1,4 +1,3 @@
-const fs = require('fs')
 const cheerio = require('cheerio')
 const request = require('request')
 const moment = require('moment')
@@ -15,15 +14,6 @@ Object.assign(String.prototype, {
     }
   }
 })
-
-function readFromFile () {
-  return new Promise((resolve, reject) => {
-    fs.readFile('./tmp/sample.html', (err, data) => {
-      if (err) reject(err)
-      resolve(data.toString())
-    })
-  })
-}
 
 function get (symbol = '') {
   return new Promise((resolve, reject) => {

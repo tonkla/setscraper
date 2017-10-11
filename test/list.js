@@ -1,11 +1,30 @@
 /* global describe it */
 
-const chai = require('chai')
-// const chaiHttp = require('chai-http')
-const expect = chai.expect
+const { expect } = require('chai')
+const scraper = require('../src')
 
-describe('get()', function () {
+describe('GET all indexes', () => {
   it('should work', () => {
-    expect(false).to.equal(true)
+    return scraper.get().then(res => {
+      expect(res.indexes).length.to.be.above(1)
+      expect(res.updatedAt).to.be.an.instanceof(Date)
+    })
+  })
+})
+
+describe('GET SET50 index', () => {
+  it('should get 50 stocks', () => {
+    return scraper.get('set50').then(res => {
+      expect(res.stocks).have.length(50)
+    })
+  })
+})
+
+describe('GET by symbol', () => {
+  it('should work', () => {
+    return scraper.get('true').then(res => {
+      expect(res.symbol).to.equal('TRUE')
+      expect(res.value).to.be.above(0)
+    })
   })
 })
