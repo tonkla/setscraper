@@ -42,7 +42,7 @@ scraper.get('advanc').then(data => {
 })
 ```
 
-```json
+```text
 { symbol: 'ADVANC',
   updatedAt: 2017-10-20T17:30:04.000Z,
   marketStatus: 'Closed',
