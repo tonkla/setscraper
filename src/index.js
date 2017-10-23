@@ -1,3 +1,4 @@
 const { get } = require('./realtime')
 const { getStockList } = require('./list')
-module.exports = { get, getStockList }
+const { getHistoricalPrices } = require('./history')
+module.exports = { get, getStockList, getHistoricalPrices }

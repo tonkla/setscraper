@@ -3,17 +3,17 @@
 const { expect } = require('chai')
 const scraper = require('../src')
 
-describe('GET all indexes', function () {
+describe('GET summary real-time prices of all indexes', function () {
   this.timeout(3000)
   it('should work', () => {
     return scraper.get().then(data => {
-      expect(data.indexes).length.to.be.above(1)
+      expect(data.indexes).length.to.be.above(3)
       expect(data.updatedAt).to.be.an.instanceof(Date)
     })
   })
 })
 
-describe('GET SET50 index', () => {
+describe('GET real-time prices of all stocks in the SET50 index', () => {
   it('should get 50 stocks', () => {
     return scraper.get('set50').then(data => {
       expect(data.updatedAt).to.be.an.instanceof(Date)
@@ -22,11 +22,13 @@ describe('GET SET50 index', () => {
   })
 })
 
-describe('GET by symbol', () => {
+describe('GET real-time price of the stock', () => {
   it('should work', () => {
-    return scraper.get('true').then(data => {
+    return scraper.get('advanc').then(data => {
+      expect(data).to.have.property('updatedAt')
       expect(data.updatedAt).to.be.an.instanceof(Date)
-      expect(data.symbol).to.equal('TRUE')
+      expect(data).to.have.property('symbol')
+      expect(data.symbol).to.equal('ADVANC')
       expect(data.value).to.be.above(0)
     })
   })
