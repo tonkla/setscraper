@@ -205,15 +205,21 @@ function getBySymbol (symbol) {
         const o = r.eq(1).children().eq(1).text().trim()
         const bid = b.replace(/\s+/g, '').split('/')
         const offer = o.replace(/\s+/g, '').split('/')
-        s = {
-          bid: bid[0].toFloat(),
-          bidVolume: bid[1].toFloat(),
-          offer: offer[0].toFloat(),
-          offerVolume: offer[1].toFloat()
+        if (bid.length === 2 && offer.length === 2) {
+          s = {
+            bid: bid[0].toFloat(),
+            bidVolume: bid[1].toFloat(),
+            offer: offer[0].toFloat(),
+            offerVolume: offer[1].toFloat()
+          }
+          Object.assign(stock, s)
         }
-        Object.assign(stock, s)
 
-        resolve(stock)
+        if (stock.marketStatus) {
+          resolve(stock)
+        } else {
+          resolve({})
+        }
       })
     } catch (err) {
       reject(err)

@@ -33,3 +33,11 @@ describe('GET real-time price of the stock', () => {
     })
   })
 })
+
+describe('GET invalid stock', () => {
+  it('should return empty object', () => {
+    return scraper.get('mai').then(data => {
+      expect(data).to.be.empty
+    })
+  })
+})
