@@ -1,7 +1,7 @@
 {
   "name": "setscraper",
-  "version": "0.2.1",
-  "description": "The utility scraper for https://marketdata.set.or.th",
+  "version": "0.3.0",
+  "description": "The utility scraper for https://www.set.or.th",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha"
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/tonkla/setscraper#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "moment": "^2.19.2",
+    "moment": "^2.20.1",
     "request": "^2.83.0"
   },
   "devDependencies": {
