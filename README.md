@@ -1,6 +1,6 @@
 # SET Scraper
 
-The utility scraper for https://marketdata.set.or.th.
+The utility scraper for https://www.set.or.th.
 
 ## Usage
 
@@ -89,4 +89,44 @@ scraper.getHistoricalPrices('advanc').then(data => {
   expect(data.prices[0]).to.have.property('open')
   expect(data.prices[0].open).to.be.above(0)
 })
+```
+
+### Get highlight statements of the stock
+
+```javascript
+scraper.getStatements('advanc').then(data => {
+  expect(data).to.have.property('symbol')
+  expect(data).to.have.property('statements')
+  expect(data.symbol).to.equal('ADVANC')
+
+  // schema = [ date, asset, liability, equity, revenue, profit, eps,
+  //            roa, roe, npm, price, mktCap, pe, pbv, bvps, yield ]
+  Object.keys(schema).forEach(key => {
+    expect(data.statements[0]).to.have.property(key)
+  })
+})
+```
+
+```text
+{ symbol: 'ADVANC',
+  statements:
+   [ { date: '2013-12-31',
+       asset: 112025710000,
+       liability: 66133120000,
+       equity: 45748110000,
+       revenue: 143653640000,
+       profit: 36274130000,
+       eps: 12.2,
+       roa: 44.36,
+       roe: 81.42,
+       npm: 25.25,
+       price: 199.5,
+       mktCap: 593132520000,
+       pe: 16.51,
+       pbv: 16.06,
+       bvps: 12.42,
+       yield: 5.46 },
+      ...
+  ]
+}
 ```
