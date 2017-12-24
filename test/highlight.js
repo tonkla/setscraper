@@ -32,9 +32,9 @@ describe('GET highlights of the stock', function () {
       expect(data.symbol).to.equal(symbol.toUpperCase())
 
       const hl = data.highlights[0]
-      Object.keys(schema).forEach(key => {
+      for (let key of Object.keys(schema)) {
         expect(hl).to.have.property(key)
-      })
+      }
     })
   })
 })

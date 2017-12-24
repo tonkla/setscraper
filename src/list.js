@@ -41,7 +41,7 @@ function getStocks (opt = {}) {
         prefixes.push(String.fromCharCode(i))
       }
       const promises = []
-      prefixes.forEach(prefix => {
+      for (let prefix of prefixes) {
         const _promise = new Promise((resolve, reject) => {
           getByPrefix(prefix).then(_stocks => {
             if (opt.lang && opt.lang === 'th') {
@@ -57,11 +57,10 @@ function getStocks (opt = {}) {
             } else {
               resolve(_stocks)
             }
-            resolve(_stocks)
           })
         })
         promises.push(_promise)
-      })
+      }
 
       Promise.all(promises).then(_stocks => {
         const stocks = _stocks.reduce((a, b) => {

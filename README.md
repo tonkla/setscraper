@@ -25,6 +25,8 @@ scraper.get().then(data => {
 
 ```javascript
 scraper.get('SET50').then(data => {
+  expect(data).to.have.property('index')
+  expect(data.index).to.equal('SET50')
   expect(data.updatedAt).to.be.an.instanceof(Date)
   expect(data.stocks).have.length(50)
 })
@@ -69,9 +71,10 @@ scraper.get('advanc').then(data => {
 ### Get all stocks in the market
 
 ```javascript
-scraper.getStockList().then(data => {
+scraper.getStocks().then(data => {
   expect(data).length.to.be.above(600)
   expect(data[0]).to.have.property('symbol')
+  expect(data[0]).to.have.property('name')
   expect(data[0]).to.have.property('market')
 })
 ```
