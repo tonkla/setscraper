@@ -1,5 +1,5 @@
 const { get } = require('./realtime')
-const { getStockList } = require('./list')
+const { getStocks, getStocksByPrefix } = require('./list')
 const { getHistoricalPrices } = require('./history')
 const { getHighlights } = require('./highlight')
-module.exports = { get, getStockList, getHistoricalPrices, getHighlights }
+module.exports = { get, getStocks, getStocksByPrefix, getHistoricalPrices, getHighlights }
