@@ -140,7 +140,7 @@ function getByIndex (index) {
       request(url, (err, response, body) => {
         if (err) throw err
         const $ = cheerio.load(body)
-        resolve({ updatedAt: getUpdatedAt($), indexes: extractIndexes($), stocks: extractList($) })
+        resolve({ updatedAt: getUpdatedAt($), indexes: extractIndexes($), index: index, stocks: extractList($) })
       })
     } catch (err) {
       reject(err)

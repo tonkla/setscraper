@@ -15,7 +15,10 @@ describe('GET summary real-time prices of all indexes', function () {
 
 describe('GET real-time prices of all stocks in the SET50 index', () => {
   it('should get 50 stocks', () => {
-    return scraper.get('set50').then(data => {
+    const index = 'SET50'
+    return scraper.get(index).then(data => {
+      expect(data).to.have.property('index')
+      expect(data.index).to.equal(index)
       expect(data.updatedAt).to.be.an.instanceof(Date)
       expect(data.stocks).have.length(50)
     })
