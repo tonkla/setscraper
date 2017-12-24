@@ -91,25 +91,26 @@ scraper.getHistoricalPrices('advanc').then(data => {
 })
 ```
 
-### Get highlight statements of the stock
+### Get highlights of the stock
 
 ```javascript
-scraper.getStatements('advanc').then(data => {
+scraper.getHighlights('advanc').then(data => {
   expect(data).to.have.property('symbol')
-  expect(data).to.have.property('statements')
+  expect(data).to.have.property('highlights')
   expect(data.symbol).to.equal('ADVANC')
 
   // schema = [ date, asset, liability, equity, revenue, profit, eps,
   //            roa, roe, npm, price, mktCap, pe, pbv, bvps, yield ]
+  const hl = data.highlights[0]
   Object.keys(schema).forEach(key => {
-    expect(data.statements[0]).to.have.property(key)
+    expect(hl).to.have.property(key)
   })
 })
 ```
 
 ```text
 { symbol: 'ADVANC',
-  statements:
+  highlights:
    [ { date: '2013-12-31',
        asset: 112025710000,
        liability: 66133120000,

@@ -9,7 +9,7 @@ function parseDate (str, isYearly) {
   return moment(str.substring(index, str.length), 'DD/MM/YYYY').format('YYYY-MM-DD')
 }
 
-function getStatements (symbol) {
+function getHighlights (symbol) {
   return new Promise((resolve, reject) => {
     try {
       const schema = {
@@ -37,7 +37,7 @@ function getStatements (symbol) {
 
         const $ = cheerio.load(body)
         const headers = $('#maincontent table thead th')
-        const statements = []
+        const highlights = []
         const colsNum = 5
 
         let date = 0
@@ -51,7 +51,7 @@ function getStatements (symbol) {
             // yearStr is "Q3 '17 30/09/2017"
             date = parseDate(yearStr, false)
           }
-          statements.push(Object.assign({}, schema, { date: date }))
+          highlights.push(Object.assign({}, schema, { date: date }))
         }
 
         const rows = $('#maincontent table tbody tr')
@@ -61,108 +61,108 @@ function getStatements (symbol) {
         let cols = rows.eq(1).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat({ multiply: 1e6 })
-          statements[i - 1] = Object.assign(statements[i - 1], { asset: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { asset: value })
         }
 
         // Liabilities
         cols = rows.eq(2).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat({ multiply: 1e6 })
-          statements[i - 1] = Object.assign(statements[i - 1], { liability: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { liability: value })
         }
 
         // Equity
         cols = rows.eq(3).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat({ multiply: 1e6 })
-          statements[i - 1] = Object.assign(statements[i - 1], { equity: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { equity: value })
         }
 
         // Revenue
         cols = rows.eq(5).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat({ multiply: 1e6 })
-          statements[i - 1] = Object.assign(statements[i - 1], { revenue: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { revenue: value })
         }
 
         // Net Profit
         cols = rows.eq(6).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat({ multiply: 1e6 })
-          statements[i - 1] = Object.assign(statements[i - 1], { profit: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { profit: value })
         }
 
         // Earnings per Share (EPS)
         cols = rows.eq(7).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { eps: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { eps: value })
         }
 
         // Return on Assets (ROA)
         cols = rows.eq(9).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { roa: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { roa: value })
         }
 
         // Return on Equity (ROE)
         cols = rows.eq(10).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { roe: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { roe: value })
         }
 
         // Net Profit Margin (NPM)
         cols = rows.eq(11).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { npm: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { npm: value })
         }
 
         // Last Price of Record
         cols = rows.eq(12).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { price: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { price: value })
         }
 
         // Market Capitalization
         cols = rows.eq(13).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat({ multiply: 1e6 })
-          statements[i - 1] = Object.assign(statements[i - 1], { mktCap: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { mktCap: value })
         }
 
         // Price to Earnings Ratio
         cols = rows.eq(15).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { pe: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { pe: value })
         }
 
         // Price to Book Value Ratio
         cols = rows.eq(16).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { pbv: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { pbv: value })
         }
 
         // Book Value per Share
         cols = rows.eq(17).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { bvps: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { bvps: value })
         }
 
         // Dividend Yield %
         cols = rows.eq(18).children('td')
         for (let i = 1; i <= colsNum; i++) {
           value = cols.eq(i).text().trim().toFloat()
-          statements[i - 1] = Object.assign(statements[i - 1], { yield: value })
+          highlights[i - 1] = Object.assign(highlights[i - 1], { yield: value })
         }
 
-        resolve({ symbol: symbol.toUpperCase(), statements: statements })
+        resolve({ symbol: symbol.toUpperCase(), highlights: highlights })
       })
     } catch (err) {
       reject(err)
@@ -170,4 +170,4 @@ function getStatements (symbol) {
   })
 }
 
-module.exports = { getStatements }
+module.exports = { getHighlights }

@@ -3,11 +3,11 @@
 const { expect } = require('chai')
 const scraper = require('../src')
 
-describe('GET highlight statements of the stock', function () {
-  this.timeout(2000)
+describe('GET highlights of the stock', function () {
+  this.timeout(1000)
   it('should work', () => {
     const symbol = 'advanc'
-    return scraper.getStatements(symbol).then(data => {
+    return scraper.getHighlights(symbol).then(data => {
       const schema = {
         date: '',
         asset: 0,
@@ -28,12 +28,12 @@ describe('GET highlight statements of the stock', function () {
       }
 
       expect(data).to.have.property('symbol')
-      expect(data).to.have.property('statements')
+      expect(data).to.have.property('highlights')
       expect(data.symbol).to.equal(symbol.toUpperCase())
 
-      const stmt = data.statements[0]
+      const hl = data.highlights[0]
       Object.keys(schema).forEach(key => {
-        expect(stmt).to.have.property(key)
+        expect(hl).to.have.property(key)
       })
     })
   })
