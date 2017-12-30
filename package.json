@@ -1,6 +1,6 @@
 {
   "name": "setscraper",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "The utility scraper for https://www.set.or.th",
   "main": "src/index.js",
   "scripts": {

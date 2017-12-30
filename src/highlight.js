@@ -38,7 +38,7 @@ function getHighlights (symbol) {
 
       const url = `https://www.set.or.th/set/companyhighlight.do?symbol=${symbol.toUpperCase()}&language=en&country=US`
       request(url, (err, response, body) => {
-        if (err) reject(err)
+        if (err) resolve({ symbol: symbol.toUpperCase(), highlights: [] })
 
         const $ = cheerio.load(body)
         const headers = $('#maincontent table thead th')
@@ -175,7 +175,7 @@ function getHighlights (symbol) {
         resolve({ symbol: symbol.toUpperCase(), highlights: highlights })
       })
     } catch (err) {
-      reject(err)
+      resolve({ symbol: symbol.toUpperCase(), highlights: [] })
     }
   })
 }
