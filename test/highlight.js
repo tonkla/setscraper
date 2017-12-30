@@ -38,3 +38,13 @@ describe('GET highlights of the stock', function () {
     })
   })
 })
+
+describe('GET highlights of an invalid stock', function () {
+  this.timeout(1000)
+  it('should work', () => {
+    const symbol = 'advan'
+    return scraper.getHighlights(symbol).then(data => {
+      expect(data).to.be.empty
+    })
+  })
+})

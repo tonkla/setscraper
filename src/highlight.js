@@ -4,9 +4,14 @@ const moment = require('moment')
 require('./utils')
 
 function parseDate (str, isYearly) {
-  let index = 7
-  if (!isYearly) index--
-  return moment(str.substring(index, str.length), 'DD/MM/YYYY').format('YYYY-MM-DD')
+  try {
+    let index = 7
+    if (!isYearly) index--
+    const date = moment(str.substring(index, str.length), 'DD/MM/YYYY').format('YYYY-MM-DD')
+    return (date !== 'Invalid date') ? date : undefined
+  } catch (err) {
+    return undefined
+  }
 }
 
 function getHighlights (symbol) {
@@ -51,7 +56,12 @@ function getHighlights (symbol) {
             // yearStr is "Q3 '17 30/09/2017"
             date = parseDate(yearStr, false)
           }
-          highlights.push(Object.assign({}, schema, { date: date }))
+          if (date) {
+            highlights.push(Object.assign({}, schema, { date: date }))
+          } else {
+            resolve([])
+            return
+          }
         }
 
         const rows = $('#maincontent table tbody tr')
