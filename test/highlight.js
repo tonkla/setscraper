@@ -44,7 +44,9 @@ describe('GET highlights of an invalid stock', function () {
   it('should work', () => {
     const symbol = 'advan'
     return scraper.getHighlights(symbol).then(data => {
-      expect(data).to.be.empty
+      expect(data).to.have.property('symbol')
+      expect(data).to.have.property('highlights')
+      expect(data.highlights).to.be.empty
     })
   })
 })

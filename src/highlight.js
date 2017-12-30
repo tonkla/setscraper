@@ -59,7 +59,7 @@ function getHighlights (symbol) {
           if (date) {
             highlights.push(Object.assign({}, schema, { date: date }))
           } else {
-            resolve([])
+            resolve({ symbol: symbol.toUpperCase(), highlights: [] })
             return
           }
         }
