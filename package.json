@@ -1,6 +1,6 @@
 {
   "name": "setscraper",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "The utility scraper for https://www.set.or.th",
   "main": "src/index.js",
   "scripts": {
@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/tonkla/setscraper#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "moment": "^2.22.2",
-    "request": "^2.87.0"
+    "cheerio": "^1.0.0-rc.3",
+    "moment": "^2.24.0",
+    "request": "^2.88.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "mocha": "^4.1.0"
   }
 }
