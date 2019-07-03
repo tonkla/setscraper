@@ -3,7 +3,7 @@ const request = require('request')
 const moment = require('moment')
 require('./utils')
 
-function get (symbol = '') {
+function get(symbol = '') {
   return new Promise((resolve, reject) => {
     try {
       let output = {}
@@ -36,9 +36,14 @@ function get (symbol = '') {
   })
 }
 
-function getUpdatedAt ($) {
+function getUpdatedAt($) {
   try {
-    const text = $('.table-info').children().first().text().split('Last Update ')[1].trim()
+    const text = $('.table-info')
+      .children()
+      .first()
+      .text()
+      .split('Last Update ')[1]
+      .trim()
     return moment(`${text} +0700`, 'DD/MM/YYYY HH:mm:ss ZZ').toDate()
   } catch (err) {
     console.error(err)
@@ -46,7 +51,7 @@ function getUpdatedAt ($) {
   }
 }
 
-function getUpdatedAtStr (str) {
+function getUpdatedAtStr(str) {
   try {
     const text = str.split(' Last Update ')[1]
     return moment(`${text} +0700`, 'DD MMM YYYY HH:mm:ss ZZ').toDate()
@@ -56,19 +61,45 @@ function getUpdatedAtStr (str) {
   }
 }
 
-function extractIndexes ($) {
-  const rows = $('#maincontent table.table-info tbody').eq(0).find('tr')
+function extractIndexes($) {
+  const rows = $('#maincontent table.table-info tbody')
+    .eq(0)
+    .find('tr')
   const indexes = []
   rows.each((_, row) => {
     const cols = $(row).find('td')
-    const symbol = cols.eq(0).text().trim()
-    const last = cols.eq(1).text().trim()
-    const change = cols.eq(2).text().trim()
-    const percentChange = cols.eq(3).text().trim()
-    const high = cols.eq(4).text().trim()
-    const low = cols.eq(5).text().trim()
-    const volume = cols.eq(6).text().trim()
-    const value = cols.eq(7).text().trim()
+    const symbol = cols
+      .eq(0)
+      .text()
+      .trim()
+    const last = cols
+      .eq(1)
+      .text()
+      .trim()
+    const change = cols
+      .eq(2)
+      .text()
+      .trim()
+    const percentChange = cols
+      .eq(3)
+      .text()
+      .trim()
+    const high = cols
+      .eq(4)
+      .text()
+      .trim()
+    const low = cols
+      .eq(5)
+      .text()
+      .trim()
+    const volume = cols
+      .eq(6)
+      .text()
+      .trim()
+    const value = cols
+      .eq(7)
+      .text()
+      .trim()
     indexes.push({
       symbol: symbol,
       last: last.toFloat(),
@@ -77,29 +108,67 @@ function extractIndexes ($) {
       high: high.toFloat(),
       low: low.toFloat(),
       volume: volume.toFloat({ multiply: 1e3 }),
-      value: value.toFloat({ multiply: 1e6 })
+      value: value.toFloat({ multiply: 1e6 }),
     })
   })
   return indexes
 }
 
-function extractList ($) {
-  const rows = $('#maincontent table.table-info tbody').eq(2).find('tr')
+function extractList($) {
+  const rows = $('#maincontent table.table-info tbody')
+    .eq(2)
+    .find('tr')
   const list = []
   rows.each((_, row) => {
     const cols = $(row).find('td')
-    const symbol = cols.eq(0).text().trim()
-    const sign = cols.eq(1).text().trim()
-    const open = cols.eq(2).text().trim()
-    const high = cols.eq(3).text().trim()
-    const low = cols.eq(4).text().trim()
-    const last = cols.eq(5).text().trim()
-    const change = cols.eq(6).text().trim()
-    const percentChange = cols.eq(7).text().trim()
-    const bid = cols.eq(8).text().trim()
-    const offer = cols.eq(9).text().trim()
-    const volume = cols.eq(10).text().trim()
-    const value = cols.eq(11).text().trim()
+    const symbol = cols
+      .eq(0)
+      .text()
+      .trim()
+    const sign = cols
+      .eq(1)
+      .text()
+      .trim()
+    const open = cols
+      .eq(2)
+      .text()
+      .trim()
+    const high = cols
+      .eq(3)
+      .text()
+      .trim()
+    const low = cols
+      .eq(4)
+      .text()
+      .trim()
+    const last = cols
+      .eq(5)
+      .text()
+      .trim()
+    const change = cols
+      .eq(6)
+      .text()
+      .trim()
+    const percentChange = cols
+      .eq(7)
+      .text()
+      .trim()
+    const bid = cols
+      .eq(8)
+      .text()
+      .trim()
+    const offer = cols
+      .eq(9)
+      .text()
+      .trim()
+    const volume = cols
+      .eq(10)
+      .text()
+      .trim()
+    const value = cols
+      .eq(11)
+      .text()
+      .trim()
     list.push({
       symbol: symbol,
       sign: sign,
@@ -112,16 +181,17 @@ function extractList ($) {
       bid: bid.toFloat(),
       offer: offer.toFloat(),
       volume: volume.toFloat(),
-      value: value.toFloat({ multiply: 1e3 })
+      value: value.toFloat({ multiply: 1e3 }),
     })
   })
   return list
 }
 
-function getIndexes () {
+function getIndexes() {
   return new Promise((resolve, reject) => {
     try {
-      const url = 'https://marketdata.set.or.th/mkt/marketsummary.do?language=en&country=US'
+      const url =
+        'https://marketdata.set.or.th/mkt/marketsummary.do?language=en&country=US'
       request(url, (err, response, body) => {
         if (err) throw err
         const $ = cheerio.load(body)
@@ -133,14 +203,19 @@ function getIndexes () {
   })
 }
 
-function getByIndex (index) {
+function getByIndex(index) {
   return new Promise((resolve, reject) => {
     try {
       const url = `https://marketdata.set.or.th/mkt/sectorquotation.do?sector=${index}&language=en&country=US`
       request(url, (err, response, body) => {
         if (err) throw err
         const $ = cheerio.load(body)
-        resolve({ updatedAt: getUpdatedAt($), indexes: extractIndexes($), index: index, stocks: extractList($) })
+        resolve({
+          updatedAt: getUpdatedAt($),
+          indexes: extractIndexes($),
+          index: index,
+          stocks: extractList($),
+        })
       })
     } catch (err) {
       reject(err)
@@ -148,29 +223,98 @@ function getByIndex (index) {
   })
 }
 
-function getBySymbol (symbol) {
+function getBySymbol(symbol) {
   return new Promise((resolve, reject) => {
     try {
       const url = `https://marketdata.set.or.th/mkt/stockquotation.do?symbol=${symbol.toUpperCase()}&ssoPageId=1&language=en&country=US`
       request(url, (err, response, body) => {
         if (err) throw err
         const $ = cheerio.load(body)
-        const tables = $('#maincontent .row .row').eq(2).find('table')
+        const tables = $('#maincontent .row .row')
+          .eq(2)
+          .find('table')
 
-        let r = $(tables).eq(0).find('tr')
-        const updatedAt = r.eq(0).children().eq(0).text().trim()
-        const marketStatus = r.eq(1).children().eq(0).text().trim()
-        const sign = r.eq(2).children().eq(1).text().trim()
-        const last = r.eq(3).children().eq(1).text().trim()
-        const change = r.eq(4).children().eq(1).text().trim()
-        const percentChange = r.eq(5).children().eq(1).text().trim()
-        const prior = r.eq(6).children().eq(1).text().trim()
-        const open = r.eq(7).children().eq(1).text().trim()
-        const high = r.eq(8).children().eq(1).text().trim()
-        const low = r.eq(9).children().eq(1).text().trim()
-        const volume = r.eq(10).children().eq(1).text().trim()
-        const value = r.eq(11).children().eq(1).text().trim()
-        const average = r.eq(12).children().eq(1).text().trim()
+        let r = $(tables)
+          .eq(0)
+          .find('tr')
+        const updatedAt = r
+          .eq(0)
+          .children()
+          .eq(0)
+          .text()
+          .trim()
+        const marketStatus = r
+          .eq(1)
+          .children()
+          .eq(0)
+          .text()
+          .trim()
+        const sign = r
+          .eq(2)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const last = r
+          .eq(3)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const change = r
+          .eq(4)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const percentChange = r
+          .eq(5)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const prior = r
+          .eq(6)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const open = r
+          .eq(7)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const high = r
+          .eq(8)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const low = r
+          .eq(9)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const volume = r
+          .eq(10)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const value = r
+          .eq(11)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const average = r
+          .eq(12)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
         let s = {
           updatedAt: getUpdatedAtStr(updatedAt),
           marketStatus: marketStatus.split(' : ')[1],
@@ -184,25 +328,54 @@ function getBySymbol (symbol) {
           low: low.toFloat(),
           volume: volume.toFloat(),
           value: value.toFloat({ multiply: 1e3 }),
-          average: average.toFloat()
+          average: average.toFloat(),
         }
         const stock = { symbol: symbol.toUpperCase() }
         Object.assign(stock, s)
 
-        r = $(tables).eq(1).find('tr')
-        const par = r.eq(0).children().eq(1).text().trim()
-        const ceiling = r.eq(1).children().eq(1).text().trim()
-        const floor = r.eq(2).children().eq(1).text().trim()
+        r = $(tables)
+          .eq(1)
+          .find('tr')
+        const par = r
+          .eq(0)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const ceiling = r
+          .eq(1)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const floor = r
+          .eq(2)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
         s = {
           par: par.toFloat(),
           ceiling: ceiling.toFloat(),
-          floor: floor.toFloat()
+          floor: floor.toFloat(),
         }
         Object.assign(stock, s)
 
-        r = $(tables).eq(2).find('tr')
-        const b = r.eq(0).children().eq(1).text().trim()
-        const o = r.eq(1).children().eq(1).text().trim()
+        r = $(tables)
+          .eq(2)
+          .find('tr')
+        const b = r
+          .eq(0)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
+        const o = r
+          .eq(1)
+          .children()
+          .eq(1)
+          .text()
+          .trim()
         const bid = b.replace(/\s+/g, '').split('/')
         const offer = o.replace(/\s+/g, '').split('/')
         if (bid.length === 2 && offer.length === 2) {
@@ -210,7 +383,7 @@ function getBySymbol (symbol) {
             bid: bid[0].toFloat(),
             bidVolume: bid[1].toFloat(),
             offer: offer[0].toFloat(),
-            offerVolume: offer[1].toFloat()
+            offerVolume: offer[1].toFloat(),
           }
           Object.assign(stock, s)
         }

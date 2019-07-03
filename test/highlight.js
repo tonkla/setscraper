@@ -3,7 +3,7 @@
 const { expect } = require('chai')
 const scraper = require('../src')
 
-describe('GET highlights of the stock', function () {
+describe('GET highlights of the stock', function() {
   this.timeout(1000)
   it('should work', () => {
     const symbol = 'advanc'
@@ -24,7 +24,7 @@ describe('GET highlights of the stock', function () {
         pe: 0,
         pbv: 0,
         bvps: 0,
-        yield: 0
+        yield: 0,
       }
 
       expect(data).to.have.property('symbol')
@@ -39,7 +39,7 @@ describe('GET highlights of the stock', function () {
   })
 })
 
-describe('GET highlights of an invalid stock', function () {
+describe('GET highlights of an invalid stock', function() {
   this.timeout(1000)
   it('should work', () => {
     const symbol = 'advan'

@@ -3,7 +3,7 @@
 const { expect } = require('chai')
 const scraper = require('../src')
 
-describe('GET summary real-time prices of all indexes', function () {
+describe('GET summary real-time prices of all indexes', function() {
   this.timeout(3000)
   it('should work', () => {
     return scraper.get().then(data => {

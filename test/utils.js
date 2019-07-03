@@ -3,7 +3,7 @@
 const { expect } = require('chai')
 require('../src/utils')
 
-describe('String.toFloat()', function () {
+describe('String.toFloat()', function() {
   it('should work', () => {
     expect('1'.toFloat()).to.eq(1)
     expect('12'.toFloat()).to.eq(12)

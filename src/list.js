@@ -1,7 +1,7 @@
 const cheerio = require('cheerio')
 const request = require('request')
 
-function getByPrefix (prefix, lang = 'en') {
+function getByPrefix(prefix, lang = 'en') {
   return new Promise((resolve, reject) => {
     try {
       let url = `https://www.set.or.th/set/commonslookup.do?language=en&country=US&prefix=${prefix}`
@@ -16,9 +16,18 @@ function getByPrefix (prefix, lang = 'en') {
         const rows = $('#maincontent table tbody tr')
         rows.each((_, row) => {
           const cols = $(row).find('td')
-          const symbol = cols.eq(0).text().trim()
-          const name = cols.eq(1).text().trim()
-          const market = cols.eq(2).text().trim()
+          const symbol = cols
+            .eq(0)
+            .text()
+            .trim()
+          const name = cols
+            .eq(1)
+            .text()
+            .trim()
+          const market = cols
+            .eq(2)
+            .text()
+            .trim()
           if (lang === 'th') {
             stocks.push({ symbol: symbol, nameTH: name, market: market })
           } else {
@@ -33,7 +42,7 @@ function getByPrefix (prefix, lang = 'en') {
   })
 }
 
-function getStocks (opt = {}) {
+function getStocks(opt = {}) {
   return new Promise((resolve, reject) => {
     try {
       const prefixes = ['NUMBER']
@@ -74,7 +83,7 @@ function getStocks (opt = {}) {
   })
 }
 
-function getStocksByPrefix (prefix, opt = {}) {
+function getStocksByPrefix(prefix, opt = {}) {
   return new Promise((resolve, reject) => {
     try {
       getByPrefix(prefix).then(_stocks => {

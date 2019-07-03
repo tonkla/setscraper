@@ -3,7 +3,7 @@ const request = require('request')
 const moment = require('moment')
 require('./utils')
 
-function getHistoricalPrices (_symbol) {
+function getHistoricalPrices(_symbol) {
   return new Promise((resolve, reject) => {
     try {
       const symbol = _symbol.toUpperCase()
@@ -29,7 +29,7 @@ function getHistoricalPrices (_symbol) {
   })
 }
 
-function getByPage (page) {
+function getByPage(page) {
   return new Promise((resolve, reject) => {
     try {
       request(page, (err, response, body) => {
@@ -39,17 +39,47 @@ function getByPage (page) {
         const rows = $('#maincontent table tbody tr')
         rows.each((_, row) => {
           const cols = $(row).find('td')
-          const date = cols.eq(0).text().trim()
-          const open = cols.eq(1).text().trim()
-          const high = cols.eq(2).text().trim()
-          const low = cols.eq(3).text().trim()
-          const close = cols.eq(4).text().trim()
-          const change = cols.eq(5).text().trim()
-          const percentChange = cols.eq(6).text().trim()
-          const volume = cols.eq(7).text().trim()
-          const value = cols.eq(8).text().trim()
+          const date = cols
+            .eq(0)
+            .text()
+            .trim()
+          const open = cols
+            .eq(1)
+            .text()
+            .trim()
+          const high = cols
+            .eq(2)
+            .text()
+            .trim()
+          const low = cols
+            .eq(3)
+            .text()
+            .trim()
+          const close = cols
+            .eq(4)
+            .text()
+            .trim()
+          const change = cols
+            .eq(5)
+            .text()
+            .trim()
+          const percentChange = cols
+            .eq(6)
+            .text()
+            .trim()
+          const volume = cols
+            .eq(7)
+            .text()
+            .trim()
+          const value = cols
+            .eq(8)
+            .text()
+            .trim()
           prices.push({
-            date: moment(`${date} 17:00:00 +0700`, 'DD/MM/YYYY HH:mm:ss ZZ').toDate(),
+            date: moment(
+              `${date} 17:00:00 +0700`,
+              'DD/MM/YYYY HH:mm:ss ZZ'
+            ).toDate(),
             open: open.toFloat(),
             high: high.toFloat(),
             low: low.toFloat(),
@@ -57,7 +87,7 @@ function getByPage (page) {
             change: change.toFloat(),
             percentChange: percentChange.toFloat(),
             volume: volume.toFloat(),
-            value: value.toFloat({ multiply: 1e3 })
+            value: value.toFloat({ multiply: 1e3 }),
           })
         })
         resolve(prices)

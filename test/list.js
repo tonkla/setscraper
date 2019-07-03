@@ -3,7 +3,7 @@
 const { expect } = require('chai')
 const scraper = require('../src')
 
-describe('GET all stocks in the market', function () {
+describe('GET all stocks in the market', function() {
   this.timeout(10000)
   it('should work', async () => {
     const prefixes = ['NUMBER']
@@ -21,7 +21,7 @@ describe('GET all stocks in the market', function () {
   })
 })
 
-describe('GET stocks by specific prefix and language', function () {
+describe('GET stocks by specific prefix and language', function() {
   this.timeout(1000)
   it('should work', async () => {
     const data = await scraper.getStocksByPrefix('Q', { lang: 'th' })
