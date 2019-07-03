@@ -10,7 +10,6 @@ describe('GET historical prices of the stock', function() {
       expect(data).to.have.property('symbol')
       expect(data).to.have.property('prices')
       expect(data.symbol).to.equal('ADVANC')
-      expect(data.prices).length.to.be.above(100)
       expect(data.prices[0]).to.have.property('date')
       expect(data.prices[0].date).to.be.an.instanceof(Date)
       expect(data.prices[0]).to.have.property('open')
