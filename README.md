@@ -2,6 +2,13 @@
 
 The utility scraper for https://www.set.or.th.
 
+**Warning:** It works only on `node < 12.0.0`, because of [switching to a new HTTP parser](https://nodejs.org/api/deprecations.html#deprecations_dep0131_legacy_http_parser)
+
+For more details,
+
+* https://github.com/nodejs/node/issues/27711
+* https://nodejs.org/api/cli.html#cli_http_parser_library
+
 ## Usage
 
 ```bash
