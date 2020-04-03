@@ -17,7 +17,7 @@ function parseDate(str, isYearly) {
 }
 
 function getHighlights(symbol) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     try {
       const schema = {
         date: '',
@@ -59,190 +59,189 @@ function getHighlights(symbol) {
             // yearStr is "Q3 '17 30/09/2017"
             date = parseDate(yearStr, false)
           }
-          if (date) {
-            highlights.push(Object.assign({}, schema, { date: date }))
-          } else {
-            resolve({ symbol: symbol.toUpperCase(), highlights: [] })
-            return
-          }
+          if (date) highlights.push(Object.assign({}, schema, { date: date }))
         }
 
         const rows = $('#maincontent table tbody tr')
-        let value = 0
 
         // Assets
         let cols = rows.eq(1).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat({ multiply: 1e6 })
-          highlights[i - 1] = Object.assign(highlights[i - 1], { asset: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], asset: value }
         }
 
         // Liabilities
         cols = rows.eq(2).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat({ multiply: 1e6 })
-          highlights[i - 1] = Object.assign(highlights[i - 1], {
-            liability: value,
-          })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], liability: value }
         }
 
         // Equity
         cols = rows.eq(3).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat({ multiply: 1e6 })
-          highlights[i - 1] = Object.assign(highlights[i - 1], {
-            equity: value,
-          })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], equity: value }
         }
 
         // Revenue
         cols = rows.eq(5).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat({ multiply: 1e6 })
-          highlights[i - 1] = Object.assign(highlights[i - 1], {
-            revenue: value,
-          })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], revenue: value }
         }
 
         // Net Profit
         cols = rows.eq(6).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat({ multiply: 1e6 })
-          highlights[i - 1] = Object.assign(highlights[i - 1], {
-            profit: value,
-          })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], profit: value }
         }
 
         // Earnings per Share (EPS)
         cols = rows.eq(7).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { eps: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], eps: value }
         }
 
         // Return on Assets (ROA)
         cols = rows.eq(9).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { roa: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], roa: value }
         }
 
         // Return on Equity (ROE)
         cols = rows.eq(10).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { roe: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], roe: value }
         }
 
         // Net Profit Margin (NPM)
         cols = rows.eq(11).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { npm: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], npm: value }
         }
 
         // Last Price of Record
         cols = rows.eq(12).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { price: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], price: value }
         }
 
         // Market Capitalization
         cols = rows.eq(13).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat({ multiply: 1e6 })
-          highlights[i - 1] = Object.assign(highlights[i - 1], {
-            mktCap: value,
-          })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], mktCap: value }
         }
 
         // Price to Earnings Ratio
         cols = rows.eq(15).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { pe: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], pe: value }
         }
 
         // Price to Book Value Ratio
         cols = rows.eq(16).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { pbv: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], pbv: value }
         }
 
         // Book Value per Share
         cols = rows.eq(17).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { bvps: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], bvps: value }
         }
 
         // Dividend Yield %
         cols = rows.eq(18).children('td')
         for (let i = 1; i < headers.length; i++) {
-          value = cols
+          const value = cols
             .eq(i)
             .text()
             .trim()
             .toFloat()
-          highlights[i - 1] = Object.assign(highlights[i - 1], { yield: value })
+          if (value && highlights[i - 1])
+            highlights[i - 1] = { ...highlights[i - 1], yield: value }
         }
 
         resolve({ symbol: symbol.toUpperCase(), highlights: highlights })
